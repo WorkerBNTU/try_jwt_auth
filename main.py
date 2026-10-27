@@ -1,2 +1,9 @@
-# fastapi
-from routes import auth
+from fastapi import FastAPI
+from routes.auth import router
+
+app = FastAPI()
+app.include_router(router)
+
+@app.get("/profile")
+def profile():
+    pass
