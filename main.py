@@ -6,6 +6,7 @@ from limiter import limiter
 from models import User
 from routes.auth import router as auth_router
 from routes.admin import router as admin_router
+from routes.tasks import router as tasks_router
 from dependencies import require_role, UserRole
 
 
@@ -23,6 +24,7 @@ app.add_middleware(
 
 app.include_router(auth_router)
 app.include_router(admin_router)
+app.include_router(tasks_router)
 
 @app.get("/profile")
 def profile(current_user: User = Depends(get_current_user)):

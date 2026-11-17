@@ -3,6 +3,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+from celery_app import send_welcome_email
 from database import get_session
 from limiter import limiter
 from models import User
@@ -28,8 +29,10 @@ def register(data: UserRegister, session: Session = Depends(get_session)):
 
     session.add(user)
     session.commit()
+    
+    task = send_welcome_email.delay(user.email)
 
-    return {"id": user.id, "email": user.email}
+    return { "id": user.id, "email": user.email, "task_id": task.id }
 
 
 @router.post("/login")
@@ -47,3 +50,12 @@ def login(
         raise HTTPException(status_code=401, detail="Неверный email или пароль")
 
     return {"access_token": create_token(user.id), "token_type": "bearer"}
+
+
+"""
+FastAPI (маршрут) -> кладёт задачу в очередь -> возвращает ответ клиенту
+                               |
+                            Очередь
+                               |
+                        Celery-воркер  -> выполняет задачу -> иногда сохраняем результат
+"""
