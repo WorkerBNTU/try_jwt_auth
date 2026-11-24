@@ -1,4 +1,6 @@
 from dotenv import load_dotenv
+load_dotenv()
+
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -10,7 +12,7 @@ from routes.admin import router as admin_router
 from routes.tasks import router as tasks_router
 from dependencies import require_role, UserRole
 
-load_dotenv()
+
 
 app = FastAPI()
 

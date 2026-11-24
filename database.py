@@ -1,7 +1,8 @@
+import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
 
-engine = create_engine("sqlite:///data/auth.db")
+engine = create_engine(os.getenv("DATABASE_URL", "postgresql://postgres:123@pg:5433/appdb"))
 
 class Base(DeclarativeBase):
     pass
