@@ -39,3 +39,4 @@ jobs:
         run: railway up --service=try_jwt_auth
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+
