@@ -9,17 +9,6 @@ services:
       - redis
       - db
 
-  redis:
-    image: redis:7-alpine
-
-  celery_worker:
-    build: .
-    command: celery -A celery_app worker --loglevel=info --pool=solo
-    env_file:
-      - .env.docker
-    depends_on:
-      - redis
-
   db:
     image: postgres:18-alpine
     environment:
@@ -28,6 +17,17 @@ services:
       POSTGRES_PASSWORD: 123
     volumes:
       - postgres_data:/var/lib/postgresql
+
+  redis:
+    image: redis:7-alpine
+
+  celery_worker:
+    build: .
+    command: celery -A celery_app worker --pool=solo
+    env_file:
+      - .env.docker
+    depends_on:
+      - redis
 
 volumes:
   postgres_data:

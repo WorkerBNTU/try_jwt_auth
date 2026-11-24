@@ -4,14 +4,12 @@ load_dotenv()
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 
-from dependencies import get_current_user
 from limiter import limiter
 from models import User
 from routes.auth import router as auth_router
 from routes.admin import router as admin_router
 from routes.tasks import router as tasks_router
-from dependencies import require_role, UserRole
-
+from dependencies import get_current_user, require_role, UserRole
 
 
 app = FastAPI()
