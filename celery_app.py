@@ -1,8 +1,11 @@
 from celery import Celery
 import time
+import os
+
+CELERY_BROKER = os.getenv("CELERY_BROKER")
 
 celery_app = Celery(
-    "tasks", broker="redis://localhost:6379/0", backend="redis://localhost:6379/0"
+    "tasks", broker=CELERY_BROKER, backend=CELERY_BROKER
 )
 
 
