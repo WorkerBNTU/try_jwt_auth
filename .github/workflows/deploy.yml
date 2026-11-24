@@ -28,9 +28,8 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Deploy to Railway
-        run: |
-          curl -fsSL https://railway.app/install.sh | sh
-          railway up
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        uses: bervProject/railway-deploy@main
+        with:
+          railway_token: ${{ secrets.RAILWAY_TOKEN }}
+          service: try_jwt_auth
 
