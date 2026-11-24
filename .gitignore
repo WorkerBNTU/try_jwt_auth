@@ -1,2 +1,6 @@
 __pycache__/
 *.db
+.env
+.env.docker
+.venv/
+venv/
